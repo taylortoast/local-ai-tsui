@@ -429,6 +429,164 @@ td {
   text-transform: uppercase;
 }
 
+.validationGroups {
+  display: grid;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.prereqPanel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.validationGroup {
+  display: grid;
+  gap: 1rem;
+}
+
+.testGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.testCard {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.testCard summary {
+  cursor: pointer;
+  display: grid;
+  gap: 0.55rem;
+  list-style: none;
+  padding: 1rem;
+}
+
+.testCard summary::-webkit-details-marker {
+  display: none;
+}
+
+.testCard summary::after {
+  color: var(--blue);
+  content: "+";
+  font-size: 1.3rem;
+  font-weight: 900;
+  justify-self: end;
+  line-height: 1;
+  margin-top: -2.2rem;
+}
+
+.testCard[open] summary::after {
+  content: "-";
+}
+
+.testCard summary strong {
+  color: var(--ink);
+  padding-right: 2rem;
+}
+
+.testCard summary p {
+  margin: 0;
+  padding-right: 2rem;
+}
+
+.passBadge {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  border-radius: 999px;
+  color: #166534;
+  font-size: 0.76rem;
+  font-weight: 900;
+  justify-self: start;
+  padding: 0.25rem 0.5rem;
+}
+
+.testBody {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+}
+
+.testBody p {
+  margin: 0;
+}
+
+.testBody strong,
+.expectedBlock h4,
+.snippetHeader h4,
+.validationChecklist h4 {
+  color: var(--ink);
+}
+
+.snippetHeader {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.snippetHeader h4,
+.expectedBlock h4 {
+  font-size: 0.84rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.copyButton {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--blue);
+  cursor: pointer;
+  font-weight: 900;
+  min-height: 2rem;
+  padding: 0.35rem 0.65rem;
+}
+
+.copyButton:hover {
+  background: #eef5ff;
+}
+
+.expectedBlock {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.expectedBlock pre {
+  background: #eef5ff;
+  color: var(--ink);
+}
+
+.validationChecklist {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.validationChecklist ul {
+  column-gap: 1.25rem;
+  columns: 2;
+  margin: 0.5rem 0 0;
+  padding-left: 0;
+}
+
+.validationChecklist li {
+  color: var(--foreground);
+  list-style: none;
+  margin-bottom: 0.45rem;
+}
+
 pre {
   background: #101820;
   border-radius: 8px;
@@ -546,7 +704,8 @@ footer strong {
   }
 
   .providerGrid,
-  .troubleGrid {
+  .troubleGrid,
+  .testGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -569,7 +728,12 @@ footer strong {
   }
 
   .providerGrid,
-  .troubleGrid {
+  .troubleGrid,
+  .testGrid {
     grid-template-columns: 1fr;
+  }
+
+  .validationChecklist ul {
+    columns: 1;
   }
 }

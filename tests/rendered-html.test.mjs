@@ -41,6 +41,10 @@ test("server-renders the local AI platform guide", async () => {
   assert.match(html, /qwen3-coder-30b-a3b-instruct-mlx/);
   assert.match(html, /MAC_LMSTUDIO_BASE_URL/);
   assert.match(html, /LOCAL_AUTOCOMPLETE_MODEL/);
+  assert.match(html, /LM Studio Connection and Endpoint Validation/);
+  assert.match(html, /Mac Test 8: Embeddings Endpoint/);
+  assert.match(html, /Local Test 8: Autocomplete Model Inference/);
+  assert.match(html, /Responses endpoint successful/);
   assert.match(html, /Security and governance/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });
