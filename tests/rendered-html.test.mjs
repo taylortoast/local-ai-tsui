@@ -57,6 +57,9 @@ test("starter preview was removed", async () => {
   ]);
 
   assert.doesNotMatch(page, /_sites-preview|SkeletonPreview|codex-preview/);
+  assert.match(page, /Local Test 8: Autocomplete Model Inference/);
+  assert.match(page, /model = \$env:LOCAL_AUTOCOMPLETE_MODEL/);
+  assert.doesNotMatch(page, /LOCAL_KMSTUDIO_BASE_URL/);
   assert.doesNotMatch(layout, /Starter Project|codex-preview/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
