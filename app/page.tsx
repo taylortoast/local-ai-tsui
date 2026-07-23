@@ -76,9 +76,15 @@ export default function Home() {
       </nav>
 
       <section className="hero" id="top">
-        <div className="heroCopy">
-          <p className="eyebrow">Department developer guide</p>
-          <h1>Use the right AI provider for the job.</h1>
+        <img
+          src="/platform-guide-hero.png"
+          alt="Local AI Platform Guide architecture showing Mac Studio, workstation, and OpenRouter connected to developer tools."
+        />
+        <div className="heroSummary">
+          <div>
+            <p className="eyebrow">Department developer guide</p>
+            <h1>Use the right AI provider for the job.</h1>
+          </div>
           <p>
             A practical internal guide for connecting developer tools to shared
             Mac Studio inference, workstation-local models, and approved cloud
@@ -87,23 +93,6 @@ export default function Home() {
           <div className="heroActions" aria-label="Quick links">
             <a href="#choose">Choose provider</a>
             <a href="#setup">Start setup</a>
-          </div>
-        </div>
-
-        <div className="systemVisual" aria-label="Three-layer local AI platform diagram">
-          <div className="toolNode">Developer Tool</div>
-          <div className="rail" />
-          <div className="node shared">
-            <span>Mac Studio</span>
-            <strong>Shared reasoning and coding</strong>
-          </div>
-          <div className="node local">
-            <span>Workstation</span>
-            <strong>Fallback plus autocomplete</strong>
-          </div>
-          <div className="node cloud">
-            <span>OpenRouter</span>
-            <strong>Approved cloud escalation</strong>
           </div>
         </div>
       </section>
