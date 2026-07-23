@@ -156,6 +156,45 @@ const continueConfig = [
   "      useRecentlyOpened: true",
 ].join("\n");
 
+const userEnvironmentVariables = [
+  "# Persistent user-level variables",
+  "[Environment]::SetEnvironmentVariable(",
+  '  "MAC_LMSTUDIO_BASE_URL",',
+  '  "http://<MAC_STUDIO_IP>:7777/v1",',
+  '  "User"',
+  ")",
+  "",
+  "[Environment]::SetEnvironmentVariable(",
+  '  "MAC_LMSTUDIO_API_KEY",',
+  '  "lm-studio",',
+  '  "User"',
+  ")",
+  "",
+  "[Environment]::SetEnvironmentVariable(",
+  '  "LOCAL_LMSTUDIO_BASE_URL",',
+  '  "http://localhost:1234/v1",',
+  '  "User"',
+  ")",
+  "",
+  "[Environment]::SetEnvironmentVariable(",
+  '  "LOCAL_LMSTUDIO_API_KEY",',
+  '  "lm-studio",',
+  '  "User"',
+  ")",
+  "",
+  "[Environment]::SetEnvironmentVariable(",
+  '  "LOCAL_FALLBACK_MODEL",',
+  '  "local-gemma",',
+  '  "User"',
+  ")",
+  "",
+  "[Environment]::SetEnvironmentVariable(",
+  '  "LOCAL_AUTOCOMPLETE_MODEL",',
+  '  "local-autocomplete",',
+  '  "User"',
+  ")",
+].join("\n");
+
 type OnboardingStep = {
   title: string;
   summary: string;
@@ -224,6 +263,18 @@ const onboardingSteps: OnboardingStep[] = [
       "local-fallback: http://localhost:1234/v1, model local-gemma, API key lm-studio when required, 8192 context.",
       "local-autocomplete: http://localhost:1234/v1, model local-autocomplete, API key lm-studio when required, 4096 context.",
     ],
+  },
+  {
+    title: "Set suggested user environment variables",
+    summary: "Persist shared endpoint names and model identifiers for tools that read from the Windows user environment.",
+    details: [
+      "Run this in PowerShell as the developer user, not inside a project script.",
+      "Replace <MAC_STUDIO_IP> with the current Mac Studio address before running.",
+      "Open a new terminal after setting user-level variables so the session sees the updated values.",
+      "Do not store real secret tokens in Git or project documentation.",
+    ],
+    codeTitle: "PowerShell user environment",
+    code: userEnvironmentVariables,
   },
   {
     title: "Configure VS Code Continue",

@@ -39,6 +39,8 @@ test("server-renders the local AI platform guide", async () => {
   assert.match(html, /local-fallback/);
   assert.match(html, /local-gemma/);
   assert.match(html, /qwen3-coder-30b-a3b-instruct-mlx/);
+  assert.match(html, /MAC_LMSTUDIO_BASE_URL/);
+  assert.match(html, /LOCAL_AUTOCOMPLETE_MODEL/);
   assert.match(html, /Security and governance/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });
