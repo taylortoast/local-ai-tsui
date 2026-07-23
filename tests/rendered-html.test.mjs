@@ -44,6 +44,7 @@ test("server-renders the local AI platform guide", async () => {
   assert.match(html, /LM Studio Connection and Endpoint Validation/);
   assert.match(html, /Mac Test 8: Embeddings Endpoint/);
   assert.match(html, /Local Test 8: Autocomplete Model Inference/);
+  assert.match(html, /PowerShell command 3/);
   assert.match(html, /Responses endpoint successful/);
   assert.match(html, /Security and governance/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);

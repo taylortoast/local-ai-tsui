@@ -542,6 +542,11 @@ td {
   text-transform: uppercase;
 }
 
+.commandBlock {
+  display: grid;
+  gap: 0.5rem;
+}
+
 .copyButton {
   background: white;
   border: 1px solid var(--line);

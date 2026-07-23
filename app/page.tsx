@@ -200,7 +200,7 @@ const userEnvironmentVariables = [
 type EndpointTest = {
   name: string;
   purpose: string;
-  command: string;
+  command: string | string[];
   expected: string;
   success: string;
   failure: string;
@@ -265,29 +265,31 @@ const macStudioTests: EndpointTest[] = [
     name: "Mac Test 5: Chat Completions Inference",
     purpose: "Validate the /chat/completions endpoint using the loaded Mac Studio chat model.",
     command: [
-      "$body = @{",
-      '  model = "qwen3-coder-30b-a3b-instruct-mlx"',
-      "  messages = @(",
-      "    @{",
-      '      role = "user"',
-      '      content = "Reply with exactly: Mac Studio inference successful"',
-      "    }",
-      "  )",
-      "  temperature = 0",
-      "  max_tokens = 30",
-      "} | ConvertTo-Json -Depth 5",
-      "",
-      "$response = Invoke-RestMethod `",
-      '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/chat/completions" `',
-      "  -Method Post `",
-      "  -Headers @{",
-      '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
-      '    "Content-Type" = "application/json"',
-      "  } `",
-      "  -Body $body",
-      "",
+      [
+        "$body = @{",
+        '  model = "qwen3-coder-30b-a3b-instruct-mlx"',
+        "  messages = @(",
+        "    @{",
+        '      role = "user"',
+        '      content = "Reply with exactly: Mac Studio inference successful"',
+        "    }",
+        "  )",
+        "  temperature = 0",
+        "  max_tokens = 30",
+        "} | ConvertTo-Json -Depth 5",
+      ].join("\n"),
+      [
+        "$response = Invoke-RestMethod `",
+        '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/chat/completions" `',
+        "  -Method Post `",
+        "  -Headers @{",
+        '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
+        '    "Content-Type" = "application/json"',
+        "  } `",
+        "  -Body $body",
+      ].join("\n"),
       "$response.choices[0].message.content",
-    ].join("\n"),
+    ],
     expected: "Mac Studio inference successful",
     success: "The model returns the expected response text.",
     failure: "Confirm the exact model ID using the /models test and verify that the model is loaded in LM Studio.",
@@ -296,23 +298,25 @@ const macStudioTests: EndpointTest[] = [
     name: "Mac Test 6: Responses Endpoint",
     purpose: "Validate the OpenAI-compatible /responses endpoint.",
     command: [
-      "$body = @{",
-      '  model = "qwen3-coder-30b-a3b-instruct-mlx"',
-      '  input = "Reply with exactly: Responses endpoint successful"',
-      "  max_output_tokens = 30",
-      "} | ConvertTo-Json -Depth 5",
-      "",
-      "$response = Invoke-RestMethod `",
-      '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/responses" `',
-      "  -Method Post `",
-      "  -Headers @{",
-      '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
-      '    "Content-Type" = "application/json"',
-      "  } `",
-      "  -Body $body",
-      "",
+      [
+        "$body = @{",
+        '  model = "qwen3-coder-30b-a3b-instruct-mlx"',
+        '  input = "Reply with exactly: Responses endpoint successful"',
+        "  max_output_tokens = 30",
+        "} | ConvertTo-Json -Depth 5",
+      ].join("\n"),
+      [
+        "$response = Invoke-RestMethod `",
+        '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/responses" `',
+        "  -Method Post `",
+        "  -Headers @{",
+        '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
+        '    "Content-Type" = "application/json"',
+        "  } `",
+        "  -Body $body",
+      ].join("\n"),
       "$response.output",
-    ].join("\n"),
+    ],
     expected: "The response should contain an assistant message with text similar to:\nResponses endpoint successful",
     success: "The returned object has a completed assistant message containing the expected text.",
     failure: "Confirm that the installed LM Studio version supports the /responses endpoint and that the model is loaded.",
@@ -321,24 +325,26 @@ const macStudioTests: EndpointTest[] = [
     name: "Mac Test 7: Legacy Completions Endpoint",
     purpose: "Validate the legacy /completions endpoint for tools that still use prompt-based completions.",
     command: [
-      "$body = @{",
-      '  model = "qwen3-coder-30b-a3b-instruct-mlx"',
-      '  prompt = "Reply with exactly: Completions endpoint successful"',
-      "  temperature = 0",
-      "  max_tokens = 30",
-      "} | ConvertTo-Json",
-      "",
-      "$response = Invoke-RestMethod `",
-      '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/completions" `',
-      "  -Method Post `",
-      "  -Headers @{",
-      '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
-      '    "Content-Type" = "application/json"',
-      "  } `",
-      "  -Body $body",
-      "",
+      [
+        "$body = @{",
+        '  model = "qwen3-coder-30b-a3b-instruct-mlx"',
+        '  prompt = "Reply with exactly: Completions endpoint successful"',
+        "  temperature = 0",
+        "  max_tokens = 30",
+        "} | ConvertTo-Json",
+      ].join("\n"),
+      [
+        "$response = Invoke-RestMethod `",
+        '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/completions" `',
+        "  -Method Post `",
+        "  -Headers @{",
+        '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
+        '    "Content-Type" = "application/json"',
+        "  } `",
+        "  -Body $body",
+      ].join("\n"),
       "$response.choices[0].text",
-    ].join("\n"),
+    ],
     expected: "Completions endpoint successful",
     success: "The choices[0].text value contains the expected text.",
     failure: "Confirm that the client requires the legacy endpoint. Prefer /chat/completions or /responses for new integrations.",
@@ -347,22 +353,24 @@ const macStudioTests: EndpointTest[] = [
     name: "Mac Test 8: Embeddings Endpoint",
     purpose: "Validate the /embeddings endpoint using the Mac Studio embedding model.",
     command: [
-      "$body = @{",
-      '  model = "text-embedding-nomic-embed-text-v1.5"',
-      '  input = "Test embedding from the Mac Studio"',
-      "} | ConvertTo-Json",
-      "",
-      "$response = Invoke-RestMethod `",
-      '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/embeddings" `',
-      "  -Method Post `",
-      "  -Headers @{",
-      '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
-      '    "Content-Type" = "application/json"',
-      "  } `",
-      "  -Body $body",
-      "",
+      [
+        "$body = @{",
+        '  model = "text-embedding-nomic-embed-text-v1.5"',
+        '  input = "Test embedding from the Mac Studio"',
+        "} | ConvertTo-Json",
+      ].join("\n"),
+      [
+        "$response = Invoke-RestMethod `",
+        '  -Uri "$env:MAC_LMSTUDIO_BASE_URL/embeddings" `',
+        "  -Method Post `",
+        "  -Headers @{",
+        '    Authorization = "Bearer $env:MAC_LMSTUDIO_API_KEY"',
+        '    "Content-Type" = "application/json"',
+        "  } `",
+        "  -Body $body",
+      ].join("\n"),
       "$response.data[0] | Select-Object index, object, embedding",
-    ].join("\n"),
+    ],
     expected: "index object    embedding\n----- ------    ---------\n0     embedding {-0.0117, 0.0462, -0.1728, ...}",
     success: "The response contains an embedding array with many decimal values.",
     failure: "Confirm that the embedding model is loaded and use the exact embedding model ID returned by /models.",
@@ -426,29 +434,31 @@ const localWorkstationTests: EndpointTest[] = [
     name: "Local Test 6: Fallback Chat Inference",
     purpose: "Validate local chat inference using the fallback model.",
     command: [
-      "$body = @{",
-      "  model = $env:LOCAL_FALLBACK_MODEL",
-      "  messages = @(",
-      "    @{",
-      '      role = "user"',
-      '      content = "Reply with exactly: Local fallback inference successful"',
-      "    }",
-      "  )",
-      "  temperature = 0",
-      "  max_tokens = 30",
-      "} | ConvertTo-Json -Depth 5",
-      "",
-      "$response = Invoke-RestMethod `",
-      '  -Uri "$env:LOCAL_LMSTUDIO_BASE_URL/chat/completions" `',
-      "  -Method Post `",
-      "  -Headers @{",
-      '    Authorization = "Bearer $env:LOCAL_LMSTUDIO_API_KEY"',
-      '    "Content-Type" = "application/json"',
-      "  } `",
-      "  -Body $body",
-      "",
+      [
+        "$body = @{",
+        "  model = $env:LOCAL_FALLBACK_MODEL",
+        "  messages = @(",
+        "    @{",
+        '      role = "user"',
+        '      content = "Reply with exactly: Local fallback inference successful"',
+        "    }",
+        "  )",
+        "  temperature = 0",
+        "  max_tokens = 30",
+        "} | ConvertTo-Json -Depth 5",
+      ].join("\n"),
+      [
+        "$response = Invoke-RestMethod `",
+        '  -Uri "$env:LOCAL_LMSTUDIO_BASE_URL/chat/completions" `',
+        "  -Method Post `",
+        "  -Headers @{",
+        '    Authorization = "Bearer $env:LOCAL_LMSTUDIO_API_KEY"',
+        '    "Content-Type" = "application/json"',
+        "  } `",
+        "  -Body $body",
+      ].join("\n"),
       "$response.choices[0].message.content",
-    ].join("\n"),
+    ],
     expected: "Local fallback inference successful",
     success: "The local fallback model produces the expected response.",
     failure: "Confirm that local-gemma is loaded and that the identifier exactly matches the /models response.",
@@ -465,33 +475,35 @@ const localWorkstationTests: EndpointTest[] = [
     name: "Local Test 8: Autocomplete Model Inference",
     purpose: "Validate that the autocomplete model can generate code-oriented output.",
     command: [
-      "$body = @{",
-      "  model = $env:LOCAL_AUTOCOMPLETE_MODEL",
-      "  messages = @(",
-      "    @{",
-      '      role = "system"',
-      '      content = "You are a code completion engine. Reply with exactly one C# return statement. Do not use markdown, classes, methods, explanations, or code fences."',
-      "    }",
-      "    @{",
-      '      role = "user"',
-      '      content = "Complete the body of this method: int Add(int a, int b) { }"',
-      "    }",
-      "  )",
-      "  temperature = 0",
-      "  max_tokens = 40",
-      "} | ConvertTo-Json -Depth 5",
-      "",
-      "$response = Invoke-RestMethod `",
-      '  -Uri "$env:LOCAL_LMSTUDIO_BASE_URL/chat/completions" `',
-      "  -Method Post `",
-      "  -Headers @{",
-      '    Authorization = "Bearer $env:LOCAL_LMSTUDIO_API_KEY"',
-      '    "Content-Type" = "application/json"',
-      "  } `",
-      "  -Body $body",
-      "",
+      [
+        "$body = @{",
+        "  model = $env:LOCAL_AUTOCOMPLETE_MODEL",
+        "  messages = @(",
+        "    @{",
+        '      role = "system"',
+        '      content = "You are a code completion engine. Reply with exactly one C# return statement. Do not use markdown, classes, methods, explanations, or code fences."',
+        "    }",
+        "    @{",
+        '      role = "user"',
+        '      content = "Complete the body of this method: int Add(int a, int b) { }"',
+        "    }",
+        "  )",
+        "  temperature = 0",
+        "  max_tokens = 40",
+        "} | ConvertTo-Json -Depth 5",
+      ].join("\n"),
+      [
+        "$response = Invoke-RestMethod `",
+        '  -Uri "$env:LOCAL_LMSTUDIO_BASE_URL/chat/completions" `',
+        "  -Method Post `",
+        "  -Headers @{",
+        '    Authorization = "Bearer $env:LOCAL_LMSTUDIO_API_KEY"',
+        '    "Content-Type" = "application/json"',
+        "  } `",
+        "  -Body $body",
+      ].join("\n"),
       "$response.choices[0].message.content",
-    ].join("\n"),
+    ],
     expected: "return a + b;",
     success: "The autocomplete model returns one valid C# return statement without markdown, a class scaffold, or an explanation.",
     failure: "If the response starts a full program, includes a code fence, or cuts off mid-output, the endpoint is reachable but the autocomplete behavior failed. Confirm local-autocomplete is loaded, then rerun this stricter prompt.",
@@ -528,6 +540,30 @@ const endpointGroups: EndpointGroup[] = [
     ],
   },
 ];
+
+function CommandBlocks({ command }: { command: EndpointTest["command"] }) {
+  const blocks = Array.isArray(command) ? command : [command];
+
+  return (
+    <>
+      {blocks.map((block, index) => (
+        <div className="commandBlock" key={`${index}-${block.slice(0, 32)}`}>
+          <div className="snippetHeader">
+            <h4>
+              {blocks.length > 1
+                ? `PowerShell command ${index + 1}`
+                : "PowerShell command"}
+            </h4>
+            <CopyButton text={block} />
+          </div>
+          <pre>
+            <code className="language-powershell">{block}</code>
+          </pre>
+        </div>
+      ))}
+    </>
+  );
+}
 
 type OnboardingStep = {
   title: string;
@@ -826,13 +862,7 @@ export default function Home() {
                       <p>{test.purpose}</p>
                     </summary>
                     <div className="testBody">
-                      <div className="snippetHeader">
-                        <h4>PowerShell command</h4>
-                        <CopyButton text={test.command} />
-                      </div>
-                      <pre>
-                        <code className="language-powershell">{test.command}</code>
-                      </pre>
+                      <CommandBlocks command={test.command} />
                       <div className="expectedBlock">
                         <h4>Expected result</h4>
                         <pre>
