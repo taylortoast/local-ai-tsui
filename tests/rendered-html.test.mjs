@@ -32,7 +32,6 @@ test("server-renders the local AI platform guide", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Local AI Platform Guide<\/title>/i);
-  assert.match(html, /platform-guide-hero\.png/);
   assert.match(html, /Use the right AI provider for the job\./);
   assert.match(html, /mac-primary/);
   assert.match(html, /local-fallback/);

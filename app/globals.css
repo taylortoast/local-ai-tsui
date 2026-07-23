@@ -97,22 +97,16 @@ main {
 }
 
 .hero {
+  align-items: center;
   display: grid;
-  gap: 1.25rem;
-  min-height: calc(100vh - 4.1rem);
-  padding: 1rem clamp(1rem, 3vw, 2.5rem) clamp(2rem, 4vw, 3.5rem);
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 0.95fr);
+  min-height: 84vh;
+  padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 5vw, 5rem) clamp(2rem, 5vw, 4rem);
 }
 
-.hero img {
-  aspect-ratio: 1729 / 900;
-  border: 1px solid rgba(216, 224, 234, 0.75);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  display: block;
-  height: auto;
-  max-height: min(70vh, 48rem);
-  object-fit: contain;
-  width: 100%;
+.heroCopy {
+  max-width: 46rem;
 }
 
 .eyebrow {
@@ -159,16 +153,9 @@ p {
   line-height: 1.68;
 }
 
-.heroSummary {
-  align-items: end;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(18rem, 0.7fr) minmax(18rem, 1fr) auto;
-}
-
-.heroSummary p:not(.eyebrow) {
-  font-size: 1rem;
-  margin: 0;
+.heroCopy > p:not(.eyebrow) {
+  font-size: clamp(1.08rem, 2vw, 1.3rem);
+  max-width: 42rem;
 }
 
 .heroActions {
@@ -193,6 +180,68 @@ p {
 .heroActions a:last-child {
   background: white;
   color: var(--ink);
+}
+
+.systemVisual {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 1rem;
+  min-height: 30rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.toolNode,
+.node {
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.toolNode {
+  align-self: end;
+  background: var(--ink);
+  color: white;
+  font-weight: 900;
+  text-align: center;
+}
+
+.rail {
+  background:
+    linear-gradient(90deg, transparent 0 49%, var(--line) 49% 51%, transparent 51%),
+    linear-gradient(var(--line), var(--line)) center/100% 2px no-repeat;
+  min-height: 2.75rem;
+}
+
+.node {
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.node span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.node strong {
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.shared {
+  border-left: 0.45rem solid var(--blue);
+}
+
+.local {
+  border-left: 0.45rem solid var(--green);
+}
+
+.cloud {
+  border-left: 0.45rem solid var(--amber);
 }
 
 .section,
@@ -396,7 +445,7 @@ footer strong {
 }
 
 @media (max-width: 980px) {
-  .heroSummary,
+  .hero,
   .splitSection {
     grid-template-columns: 1fr;
   }
@@ -425,8 +474,8 @@ footer strong {
     font-size: 3rem;
   }
 
-  .hero img {
-    max-height: none;
+  .systemVisual {
+    min-height: auto;
   }
 
   .providerGrid,
