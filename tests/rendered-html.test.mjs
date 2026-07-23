@@ -34,9 +34,11 @@ test("server-renders the local AI platform guide", async () => {
   assert.match(html, /<title>Local AI Platform Guide<\/title>/i);
   assert.match(html, /endpoint-hub-diagram\.png/);
   assert.match(html, /Use the right AI provider for the job\./);
+  assert.match(html, /10\.1\.64\.228/);
   assert.match(html, /mac-primary/);
   assert.match(html, /local-fallback/);
-  assert.match(html, /cloud-openrouter/);
+  assert.match(html, /local-gemma/);
+  assert.match(html, /qwen3-coder-30b-a3b-instruct-mlx/);
   assert.match(html, /Security and governance/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });

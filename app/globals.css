@@ -320,16 +320,129 @@ td {
   list-style: none;
 }
 
-.steps li,
+.steps > li,
 .checkPanel li {
   color: var(--foreground);
   line-height: 1.5;
 }
 
-.steps li {
+.steps > li {
   background: rgba(255, 255, 255, 0.72);
   border-left: 0.25rem solid var(--cyan);
   padding: 0.85rem 1rem;
+}
+
+.expandableSteps > li {
+  border-left: 0;
+  padding: 0;
+}
+
+.expandableSteps details {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+  border-left: 0.25rem solid var(--cyan);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.expandableSteps summary {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  list-style: none;
+  padding: 1rem;
+}
+
+.expandableSteps summary::-webkit-details-marker {
+  display: none;
+}
+
+.expandableSteps summary::after {
+  color: var(--blue);
+  content: "+";
+  font-size: 1.4rem;
+  font-weight: 900;
+  grid-column: 2;
+  justify-self: end;
+  line-height: 1;
+  margin-top: -2.7rem;
+}
+
+.expandableSteps details[open] summary::after {
+  content: "-";
+}
+
+.expandableSteps summary > span {
+  align-items: center;
+  background: var(--ink);
+  border-radius: 999px;
+  color: white;
+  display: flex;
+  font-weight: 900;
+  height: 2.25rem;
+  justify-content: center;
+  width: 2.25rem;
+}
+
+.expandableSteps summary strong {
+  color: var(--ink);
+  display: block;
+  padding-right: 2rem;
+}
+
+.expandableSteps summary p {
+  font-size: 0.95rem;
+  margin: 0.2rem 0 0;
+  padding-right: 2rem;
+}
+
+.stepBody {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.stepBody ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.stepBody li {
+  color: var(--foreground);
+  line-height: 1.55;
+}
+
+.snippetGroup {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.snippetGroup h4 {
+  color: var(--ink);
+  font-size: 0.84rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+pre {
+  background: #101820;
+  border-radius: 8px;
+  color: #edf6ff;
+  margin: 0;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+pre code {
+  color: inherit;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  white-space: pre;
 }
 
 .checkPanel,
