@@ -90,21 +90,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="systemVisual" aria-label="Three-layer local AI platform diagram">
-          <div className="toolNode">Developer Tool</div>
-          <div className="rail" />
-          <div className="node shared">
-            <span>Mac Studio</span>
-            <strong>Shared reasoning and coding</strong>
-          </div>
-          <div className="node local">
-            <span>Workstation</span>
-            <strong>Fallback plus autocomplete</strong>
-          </div>
-          <div className="node cloud">
-            <span>OpenRouter</span>
-            <strong>Approved cloud escalation</strong>
-          </div>
+        <div className="systemVisual">
+          <img
+            src="/endpoint-hub-diagram.png"
+            alt="Mac Studio, workstation, OpenRouter, and other cloud providers routed through an LLM endpoint hub into developer tools."
+          />
         </div>
       </section>
 
