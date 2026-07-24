@@ -17,7 +17,7 @@ const providers = [
     name: "local-autocomplete",
     endpoint: "http://localhost:1234/v1",
     use: "Low-latency inline and multiline VS Code completion.",
-    note: "Runs Qwen2.5-Coder 1.5B Instruct with the local-autocomplete identifier.",
+    note: "Runs Qwen2.5-Coder 3B Instruct with the local-autocomplete identifier.",
   },
   {
     name: "local-embeddings",
@@ -112,7 +112,7 @@ const localServerCommands = [
   "  --gpu max `",
   "  --identifier local-gemma",
   "",
-  "lms load qwen2.5-coder-1.5b-instruct `",
+  "lms load qwen2.5-coder-3b-instruct `",
   "  --context-length 4096 `",
   "  --gpu max `",
   "  --identifier local-autocomplete",
@@ -607,7 +607,7 @@ const onboardingSteps: OnboardingStep[] = [
     details: [
       "Tested workstation: Windows 11, 64 GB RAM, NVIDIA RTX A2000 with 6 GB VRAM.",
       "Fallback: Gemma 3 4B Instruct QAT, LM Studio model google/gemma-3-4b, identifier local-gemma, QAT Q4_0, 3.21 GB, 8192 context.",
-      "Autocomplete: Qwen2.5-Coder 1.5B Instruct, model qwen2.5-coder-1.5b-instruct, identifier local-autocomplete, Q4_K_M, 1.12 GB, 4096 context.",
+      "Autocomplete: Qwen2.5-Coder 3B Instruct, model qwen2.5-coder-3b-instruct, identifier local-autocomplete, 2.10 GB, 4096 context.",
       "Embeddings: Nomic Embed Text v1.5, model text-embedding-nomic-embed-text-v1.5, 84.11 MB.",
       "Confirmed downloaded footprint: three models, 4.42 GB total.",
     ],
@@ -676,6 +676,7 @@ export default function Home() {
           <a href="#choose">Providers</a>
           <a href="#catalog">Models</a>
           <a href="#setup">Setup</a>
+          <a href="/continue-autocomplete">Continue autocomplete</a>
           <a href="#validation">Validation</a>
           <a href="#security">Security</a>
         </div>
